@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Contagem de Palavras</title>
+</head>
+<body>
+<h1>Contagem de Palavras</h1>
+<form action="#" th:action="@{/wordcount}" th:object="${message}" method="post">
+  <label for="text">Digite uma mensagem:</label>
+  <input type="text" id="text" name="text" th:field="*{text}">
+  <button type="submit">Contar Palavras</button>
+</form>
+<div th:if="${wordCount != null}">
+  <p>A mensagem digitada possui <span th:text="${wordCount}"></span> palavras.</p>
+</div>
+</body>
+</html>

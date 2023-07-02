@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Criar CRUD</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            var counter = 1;
+
+            $("#addFieldButton").click(function () {
+                var newFieldHtml = '<div id="field' + counter + '">' +
+                    '<label for="fieldName' + counter + '">Nome do Campo:</label>' +
+                    '<input type="text" id="fieldName' + counter + '" name="fields[' + counter + '].fieldName">' +
+                    '<label for="fieldType' + counter + '">Tipo de Dado:</label>' +
+
+                    '<select id="fieldType'+ counter +'" name="fields['+counter+'].fieldType">' +
+                        '<option value="STRING">String</option>' +
+                        '<option value="INTEGER">Integer</option>' +
+                        '<option value="INT">int</option>' +
+                        '<option value="BOOLEAN">Boolean</option>' +
+                        '<option value="BOL">boolean</option>' +
+                    '</select>' +
+                    '<button type="button" onclick="removeField(' + counter + ')">Remover</button>' +
+                    '</div>';
+
+                $("#fieldsContainer").append(newFieldHtml);
+
+                counter++;
+            });
+
+            window.removeField = function (fieldIndex) {
+                $("#field" + fieldIndex).remove();
+            };
+        });
+    </script>
+
+
+</head>
+<body>
+<h1>Criar CRUD</h1>
+<form action="#" th:action="@{/crud}" th:object="${entity}" method="post">
+    <label for="entityName">Nome da Entidade:</label>
+    <input type="text" id="entityName" name="entityName">
+
+    <div id="fieldsContainer">
+        <div id="field0">
+            <label for="fieldName0">Nome do Campo:</label>
+            <input type="text" id="fieldName0" name="fields[0].fieldName">
+            <label for="fieldType0">Tipo de Dado:</label>
+            <select id="fieldType0" name="fields[0].fieldType">
+                <option value="STRING">String</option>
+                <option value="INTEGER">Integer</option>
+                <option value="INT">int</option>
+                <option value="BOOLEAN">Boolean</option>
+                <option value="BOL">boolean</option>
+            </select>
+
+        </div>
+    </div>
+
+    <button type="button" id="addFieldButton">Adicionar Campo</button>
+    <button type="submit">Criar CRUD</button>
+
+    <br>
+    <br>
+    <br>
+
+    <div th:if="${entityCode != null}">
+        <h3>EntityCode</h3>
+        <textarea id="entityCodeTextArea" th:text="${entityCode}" style="width: 60%; height: 400px;"></textarea>
+        <button onclick="copyToClipboard('entityCodeTextArea')">Copiar</button>
+    </div>
+
+    <br>
+
+    <div th:if="${serviceCode != null}">
+        <h3>serviceCode</h3>
+        <textarea id="serviceCodeTextArea" th:text="${serviceCode}" style="width: 60%; height: 400px;"></textarea>
+        <button onclick="copyToClipboard('serviceCodeTextArea')">Copiar</button>
+    </div>
+
+    <br>
+
+    <div th:if="${repositoryCode != null}">
+        <h3>repositoryCode</h3>
+        <textarea id="repositoryCodeTextArea" th:text="${repositoryCode}" style="width: 60%; height: 400px;"></textarea>
+        <button onclick="copyToClipboard('repositoryCodeTextArea')">Copiar</button>
+    </div>
+
+    <br>
+
+    <div th:if="${controllerCode != null}">
+        <h3>controllerCode</h3>
+        <textarea id="controllerCodeTextArea" th:text="${controllerCode}" style="width: 60%; height: 400px;"></textarea>
+        <button onclick="copyToClipboard('controllerCodeTextArea')">Copiar</button>
+    </div>
+
+    <script>
+        function copyToClipboard(textAreaId) {
+            const textArea = document.getElementById(textAreaId);
+            textArea.select();
+            document.execCommand("copy");
+        }
+    </script>
+
+</form>
+</body>
+</html>
